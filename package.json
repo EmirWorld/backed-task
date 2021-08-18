@@ -1,23 +1,46 @@
 {
   "name": "backed-task",
   "version": "1.0.0",
+  "private": true,
   "description": "Node.js Rest Apis with Express,Typescript, Sequelize & PostgreSQL",
-  "main": "server.js",
+  "author": {
+    "name": "Emir Kovacevic"
+  },
   "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [
-    "nodejs",
-    "typescript"
-  ],
-  "author": "Emir Kovacevic",
-  "license": "ISC",
+  "main": "server.js",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "core-js": "^3.6.5",
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "pg": "^8.7.1",
     "pg-hstore": "^2.3.4",
-    "sequelize": "^6.6.5"
-  }
+    "sequelize": "^6.6.5",
+    "vue": "^2.6.11",
+    "vue-class-component": "^7.2.3",
+    "vue-property-decorator": "^9.1.2"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-typescript": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "typescript": "~4.1.5",
+    "vue-template-compiler": "^2.6.11"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ],
+  "_id": "backed-task@1.0.0",
+  "keywords": [
+    "nodejs",
+    "typescript"
+  ],
+  "license": "ISC",
+  "readme": "ERROR: No README data found!"
 }
