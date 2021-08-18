@@ -1,13 +1,10 @@
-//Initialize Sequelize
-// We’re gonna initialize Sequelize in app/models folder that will contain model in the next step.
 
-const dbConfig = require("../config/db.config");
+const dbConfig = require("../config/db.config.js");
 
 const Sequelize = require("sequelize");
 const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
     host: dbConfig.HOST,
     dialect: dbConfig.dialect,
-    operatorsAliases: false,
 
     pool: {
         max: dbConfig.pool.max,
@@ -22,7 +19,6 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.tutorials = require("./tutorial.model.js")(sequelize, Sequelize);
+db.users = require("./user.model.js")(sequelize, Sequelize);
 
 module.exports = db;
-
