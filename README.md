@@ -1,4 +1,8 @@
 # backed-task
+This task is meant to show your skill level and understanding of Typescript in a NodeJS server environment. You are free to use any Javascript framework, pattern, ORM or anything you feel comfortable working with. The code must be tracked in git. 
+
+In this task I implemented CRUD for adding User and importing user using two JSON Arrays
+
 ## Modify app>confing>db.config.js
 ```
 module.exports = {
