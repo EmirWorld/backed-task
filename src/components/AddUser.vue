@@ -31,7 +31,7 @@
             id="email"
             required
             v-model="user.email"
-            name="email-adress"
+            name="email-address"
         />
       </div>
 
