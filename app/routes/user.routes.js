@@ -1,4 +1,9 @@
 module.exports = app => {
+
+    /*
+    * Creating ORM routes and relation ships
+    * */
+
     const users = require("../controllers/user.contoller.js");
 
     var router = require("express").Router();
@@ -9,11 +14,9 @@ module.exports = app => {
     // Retrieve all Users
     router.get("/", users.findAll);
 
-    // Retrieve all published Users
-    router.get("/published", users.findAllPublished);
-
     // Retrieve a single User with id
     router.get("/:id", users.findOne);
+
 
     // Update a Users with id
     router.put("/:id", users.update);

@@ -1,29 +1,29 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <nav class="navbar navbar-expand navbar-dark bg-dark ps-5 pe-5 pt-3 pb-3">
+      <a href="#" class="navbar-brand">Backend Task</a>
+      <div class="navbar-nav ms-auto">
+        <li class="nav-item">
+          <a href="/users" class="nav-link">Users</a>
+        </li>
+        <li class="nav-item">
+          <a href="/add" class="nav-link">Add User</a>
+        </li>
+        <li class="nav-item">
+          <a href="/import" class="nav-link">Import JSON</a>
+        </li>
+      </div>
+    </nav>
+
+    <div class="container mt-3 ">
+      <router-view />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import HelloWorld from './components/HelloWorld.vue';
+import { Component, Vue } from "vue-property-decorator";
 
-@Component({
-  components: {
-    HelloWorld,
-  },
-})
+@Component
 export default class App extends Vue {}
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>

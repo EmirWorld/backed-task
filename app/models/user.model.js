@@ -1,4 +1,7 @@
 module.exports = (sequelize, Sequelize) => {
+    /*
+    * Here we define our USER model and required fields
+    * */
     const User = sequelize.define("user", {
         _id: {
             type: Sequelize.STRING,
@@ -7,16 +10,20 @@ module.exports = (sequelize, Sequelize) => {
             primaryKey: true
         },
         firstName: {
-            type: Sequelize.STRING
+            type: Sequelize.STRING,
+
         },
         lastName: {
-            type: Sequelize.STRING
+            type: Sequelize.STRING,
+
         },
         email: {
             type: Sequelize.STRING,
+
         },
         phoneNumber: {
             type: Sequelize.STRING,
+
         }
     });
 

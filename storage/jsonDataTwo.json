@@ -2,8 +2,8 @@
   {
     "email": "marina@ankorainc.com",
     "phoneNumbers": [{
-      type: "primary",
-      value: "202-555-0105",
+      "type": "primary",
+      "value": "202-555-0105",
     }]
   },
   {

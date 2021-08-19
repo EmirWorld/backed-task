@@ -2,36 +2,23 @@ const db = require("../models");
 const User = db.users;
 const Op = db.Sequelize.Op;
 
+
 // Create and Save a new User
 exports.create = (req, res) => {
-    // Validate request
-    if (!req.body.firstName || !req.body.lastName || !req.body.email || !req.body.phoneNumber) {
-        res.status(400).send({
-            message: "Content can not be empty!"
-        });
-        return;
-    }
 
-    // Create a User
-    const user = {
-        _id: req.body._id,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        email: req.body.email,
-        phoneNumber: req.body.phoneNumber,
-    };
+    // Save one or more Users in the database(missing validation)
 
-    // Save User in the database
-    User.create(user)
-        .then(data => {
-            res.send(data);
+
+    User.bulkCreate(req.body,{validate:true,fields:['_id','firstName','lastName','email','phoneNumber']})
+       .then((data) => {
+        res.send(data)
+    }).catch((err) => {
+        res.status(500).send({
+            message:
+                err.message || "Some error occurred while creating the User."
         })
-        .catch(err => {
-            res.status(500).send({
-                message:
-                    err.message || "Some error occurred while creating the User."
-            });
-        });
+    })
+
 };
 
 // Retrieve all Users from the database.
@@ -71,7 +58,7 @@ exports.update = (req, res) => {
     const id = req.params.id;
 
     User.update(req.body, {
-        where: {id: id}
+        where: {_id: id}
     })
         .then(num => {
             if (num == 1) {
@@ -96,7 +83,7 @@ exports.delete = (req, res) => {
     const id = req.params.id;
 
     User.destroy({
-        where: {id: id}
+        where: {_id: id}
     })
         .then(num => {
             if (num == 1) {
