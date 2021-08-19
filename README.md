@@ -25,7 +25,7 @@ module.exports = {
 ```
 npm install
 
-This command install required packages
+This command will install the necessary packages.
 ```
 ## Run Node server
 ```
