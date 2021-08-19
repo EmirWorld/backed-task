@@ -60,9 +60,10 @@ export default class ImportJSON extends Vue {
     const dJSON = require('dirty-json');
     const jsonFormatOne = dJSON.parse(this.jsonData.jsonDataOne);
     const jsonFormatTwo = dJSON.parse(this.jsonData.jsonDataTwo);
+    console.log(jsonFormatTwo[1].phoneNumbers)
 
 
-    if (jsonFormatOne !== null && jsonFormatTwo !== null && typeof jsonFormatOne[0]._id !== "undefined" && typeof jsonFormatTwo[0].email !== 'undefined') {
+    if (jsonFormatOne !== null && jsonFormatTwo !== null && typeof jsonFormatOne[0]._id !== "undefined" && typeof jsonFormatTwo[0].email !== 'undefined' && jsonFormatTwo[0].phoneNumbers !== 'undefined') {
 
       /*
     * Map Formatted data and compare emails, if match exists merge into one Array
