@@ -62,9 +62,7 @@ export default class ImportJSON extends Vue {
     const jsonFormatTwo = dJSON.parse(this.jsonData.jsonDataTwo);
 
 
-
-
-    if (jsonFormatOne !== null && jsonFormatTwo !== null && typeof jsonFormatOne[0]._id !== "undefined" && typeof jsonFormatTwo[0].email !== 'undefined'){
+    if (jsonFormatOne !== null && jsonFormatTwo !== null && typeof jsonFormatOne[0]._id !== "undefined" && typeof jsonFormatTwo[0].email !== 'undefined') {
 
       /*
     * Map Formatted data and compare emails, if match exists merge into one Array
@@ -94,17 +92,20 @@ export default class ImportJSON extends Vue {
           })
 
       this.jsonData.message = '';
-    }else{
+
+    } else {
+
       this.jsonData.message = 'Please fill correctly JSON fields';
-      this.jsonData.jsonDataOne=null;
-      this.jsonData.jsonDataTwo=null;
+      this.jsonData.jsonDataOne = null;
+      this.jsonData.jsonDataTwo = null;
+
     }
 
 
   }
 
-
   mounted() {
+
   }
 }
 </script>
