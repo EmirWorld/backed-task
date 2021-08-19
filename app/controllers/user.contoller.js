@@ -5,11 +5,46 @@ const Op = db.Sequelize.Op;
 
 // Create and Save a new User
 exports.create = (req, res) => {
+    // Validate request
+    if (!req.body.firstName || !req.body.lastName || !req.body.email || !req.body.phoneNumber ) {
+        res.status(400).send({
+            message: "Content can not be empty!"
+        });
+        return;
+    }
 
+    // Create a Tutorial
+    const user = {
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email:req.body.email,
+        phoneNumber: req.body.phoneNumber,
+
+    };
+
+    // Save user in the database
+    User.create(user)
+        .then(data => {
+            res.send(data);
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while creating the Tutorial."
+            });
+        });
+
+
+
+
+};
+
+//Create and save multiple users
+
+exports.bulkCreate = (req, res)=>{
     // Save one or more Users in the database(missing validation)
 
-
-    User.bulkCreate(req.body,{validate:true,fields:['_id','firstName','lastName','email','phoneNumber']})
+    User.bulkCreate(req.body,{validate:true ,fields:['_id','firstName','lastName','email','phoneNumber']})
        .then((data) => {
         res.send(data)
     }).catch((err) => {
@@ -18,13 +53,13 @@ exports.create = (req, res) => {
                 err.message || "Some error occurred while creating the User."
         })
     })
-
 };
+
 
 // Retrieve all Users from the database.
 exports.findAll = (req, res) => {
-    const title = req.query.title;
-    var condition = title ? {title: {[Op.iLike]: `%${title}%`}} : null;
+    const firstName = req.query.firstName;
+    var condition = firstName ? {firstName: {[Op.iLike]: `%${firstName}%`}} : null;
 
     User.findAll({where: condition})
         .then(data => {

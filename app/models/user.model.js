@@ -6,24 +6,24 @@ module.exports = (sequelize, Sequelize) => {
         _id: {
             type: Sequelize.STRING,
             defaultValue: Sequelize.UUIDV4,
-            allowNull: false,
             primaryKey: true
         },
         firstName: {
             type: Sequelize.STRING,
+            notEmpty: true,
 
         },
         lastName: {
             type: Sequelize.STRING,
-
+            notEmpty: true,
         },
         email: {
             type: Sequelize.STRING,
-
+            notEmpty: true,
         },
         phoneNumber: {
             type: Sequelize.STRING,
-
+            notEmpty: true,
         }
     });
 

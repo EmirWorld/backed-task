@@ -17,6 +17,10 @@ class UserDataService {
         return http.post("/users", data)
     }
 
+    bulkCreate(data: any){
+        return http.post("/users/json", data);
+    }
+
     update(id: string, data: any) {
         return http.put('/users/' + id, data)
     }

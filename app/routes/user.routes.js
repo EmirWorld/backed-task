@@ -1,3 +1,4 @@
+const users = require("../controllers/user.contoller.js");
 module.exports = app => {
 
     /*
@@ -10,6 +11,9 @@ module.exports = app => {
 
     // Create a new User
     router.post("/", users.create);
+
+    // Create a new Users
+    router.post("/json", users.bulkCreate);
 
     // Retrieve all Users
     router.get("/", users.findAll);

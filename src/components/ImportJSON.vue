@@ -32,6 +32,7 @@
               @click="mergeData">
         Submit
       </button>
+      {{ jsonData.message }}
     </div>
   </div>
 </template>
@@ -46,44 +47,53 @@ export default class ImportJSON extends Vue {
   private jsonData = {
     jsonDataOne: null,
     jsonDataTwo: null,
+    message: ''
   }
 
   /*
   * Method to format and merge existing two json files and get JSON data to store multiple Users
   * */
+
   mergeData() {
+
+
     const dJSON = require('dirty-json');
     const jsonFormatOne = dJSON.parse(this.jsonData.jsonDataOne)
     const jsonFormatTwo = dJSON.parse(this.jsonData.jsonDataTwo)
 
+    if (jsonFormatOne || jsonFormatTwo === null) {
+      this.jsonData.message = 'Please fill correctly JSON fields'
+    } else {
 
-    /*
+      /*
     * Map Formatted data and compare emails, if match exists merge into one Array
     * */
 
-    let merged = jsonFormatOne.map((dataSetOne: { email: string; phoneNumber: string; }) => {
-      console.log(dataSetOne)
-      let temp = jsonFormatTwo.find((dataSetTwo: { email: string; }) => dataSetTwo.email === dataSetOne.email)
-      if (temp.phoneNumbers) {
-        dataSetOne.phoneNumber = temp.phoneNumbers[0].value;
-      }
-      return dataSetOne;
-    })
+      let merged = jsonFormatOne.map((dataSetOne: { email: string; phoneNumber: string; }) => {
+        console.log(dataSetOne)
+        let temp = jsonFormatTwo.find((dataSetTwo: { email: string; }) => dataSetTwo.email === dataSetOne.email)
+        if (temp.phoneNumbers) {
+          dataSetOne.phoneNumber = temp.phoneNumbers[0].value;
+        }
+        return dataSetOne;
+      })
 
-    let data = JSON.stringify(merged)
+      let data = JSON.stringify(merged)
 
+      /*
+      * Create Existing Users from JSON Importer
+      * */
 
-    /*
-    * Create Existing Users from JSON Importer
-    * */
+      UserDataService.bulkCreate(data)
+          .then((response) => {
+            console.log(response.data)
+          })
+          .catch((e) => {
+            console.log(e)
+          })
 
-    UserDataService.create(data)
-        .then((response) => {
-          console.log(response.data)
-        })
-        .catch((e) => {
-          console.log(e)
-        })
+      this.jsonData.message = '';
+    }
 
   }
 
