@@ -24,15 +24,21 @@ module.exports = {
 ## Project setup
 ```
 npm install
+
+This command install required packages
 ```
 ## Run Node server
 ```
 node server.js
+
+This command starts the server and creates tables in the database.
 ```
 
 ### Compiles and hot-reloads for development
 ```
 npm run serve
+
+This command starts Vue front-end aplication
 ```
 
 ### Compiles and minifies for production
