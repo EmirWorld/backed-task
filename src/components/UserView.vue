@@ -46,11 +46,11 @@
     </form>
 
 
-    <button class="badge badge-danger mr-2" @click="deleteUser">
+    <button class="btn btn-danger mt-2 me-2" @click="deleteUser">
       Delete
     </button>
 
-    <button type="submit" class="badge badge-success" @click="updateUser">
+    <button type="submit" class="btn btn-success mt-2" @click="updateUser">
       Update
     </button>
     <p>{{ message }}</p>

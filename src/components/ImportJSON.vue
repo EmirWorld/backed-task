@@ -28,7 +28,7 @@
         </div>
       </div>
       <button type="button"
-              class="btn btn-primary submit"
+              class="btn btn-primary submit mt-2"
               @click="mergeData">
         Submit
       </button>
@@ -61,11 +61,10 @@ export default class ImportJSON extends Vue {
     const jsonFormatOne = dJSON.parse(this.jsonData.jsonDataOne);
     const jsonFormatTwo = dJSON.parse(this.jsonData.jsonDataTwo);
 
-    if (jsonFormatOne || jsonFormatTwo === null) {
-      this.jsonData.message = 'Please fill correctly JSON fields';
-      this.jsonData.jsonDataOne=null;
-      this.jsonData.jsonDataTwo=null;
-    } else {
+
+
+
+    if (jsonFormatOne !== null && jsonFormatTwo !== null && typeof jsonFormatOne[0]._id !== "undefined" && typeof jsonFormatTwo[0].email !== 'undefined'){
 
       /*
     * Map Formatted data and compare emails, if match exists merge into one Array
@@ -95,9 +94,15 @@ export default class ImportJSON extends Vue {
           })
 
       this.jsonData.message = '';
+    }else{
+      this.jsonData.message = 'Please fill correctly JSON fields';
+      this.jsonData.jsonDataOne=null;
+      this.jsonData.jsonDataTwo=null;
     }
 
+
   }
+
 
   mounted() {
   }
