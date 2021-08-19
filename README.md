@@ -31,7 +31,7 @@ This command install required packages
 ```
 node server.js
 
-This command starts the server and creates tables in the database.
+This command starts the server and populates the database with tables.
 ```
 
 ### Compiles and hot-reloads for development
