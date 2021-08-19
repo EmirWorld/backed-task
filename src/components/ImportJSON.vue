@@ -58,11 +58,13 @@ export default class ImportJSON extends Vue {
 
 
     const dJSON = require('dirty-json');
-    const jsonFormatOne = dJSON.parse(this.jsonData.jsonDataOne)
-    const jsonFormatTwo = dJSON.parse(this.jsonData.jsonDataTwo)
+    const jsonFormatOne = dJSON.parse(this.jsonData.jsonDataOne);
+    const jsonFormatTwo = dJSON.parse(this.jsonData.jsonDataTwo);
 
     if (jsonFormatOne || jsonFormatTwo === null) {
-      this.jsonData.message = 'Please fill correctly JSON fields'
+      this.jsonData.message = 'Please fill correctly JSON fields';
+      this.jsonData.jsonDataOne=null;
+      this.jsonData.jsonDataTwo=null;
     } else {
 
       /*
