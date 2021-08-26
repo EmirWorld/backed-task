@@ -13,7 +13,7 @@ exports.create = (req, res) => {
         return;
     }
 
-    // Create a Tutorial
+    // Create a User
     const user = {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
