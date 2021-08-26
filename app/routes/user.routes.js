@@ -1,4 +1,3 @@
-const users = require("../controllers/user.contoller.js");
 module.exports = app => {
 
     /*
