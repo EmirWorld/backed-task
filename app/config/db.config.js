@@ -1,3 +1,6 @@
+/*
+* Database config module
+* */
 module.exports = {
     HOST: "localhost",
     USER: "postgres",

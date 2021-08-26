@@ -1,9 +1,17 @@
-const dbConfig = require("../config/db.config.js");
 /*
-* Connect sequelize ORM with database
+* Require database config file
+* */
+const dbConfig = require('../config/db.config');
+
+/*
+* Require Sequelize
 * */
 const Sequelize = require("sequelize");
-const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
+
+/*
+* Create new model of sequelize
+* */
+const newSequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
     host: dbConfig.HOST,
     dialect: dbConfig.dialect,
 
@@ -11,15 +19,27 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
         max: dbConfig.pool.max,
         min: dbConfig.pool.min,
         acquire: dbConfig.pool.acquire,
-        idle: dbConfig.pool.idle
+        idle: dbConfig.pool.idle,
     }
 });
 
+/*
+* Create database model
+* */
 const db = {};
 
+/*
+* Push sequelize and newSequelize to db model
+* */
 db.Sequelize = Sequelize;
-db.sequelize = sequelize;
+db.newSequelize = newSequelize;
 
-db.users = require("./user.model.js")(sequelize, Sequelize);
+/*
+* Push new users Model to db Model
+* */
+db.users = require("./user.model.js")(newSequelize,Sequelize);
 
+/*
+* Export db module
+* */
 module.exports = db;

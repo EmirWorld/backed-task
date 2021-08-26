@@ -1,83 +1,185 @@
-const db = require("../models");
+/*
+* Require database connections from models
+* */
+const db = require('../models');
+
+/*
+* Require User Model from Database
+* */
 const User = db.users;
+
+/*
+* Require Model Querying from Sequelize ORM
+* */
 const Op = db.Sequelize.Op;
 
-
-// Create and Save a new User
+/*
+* Create User
+* */
 exports.create = (req, res) => {
-    // Validate request
-    if (!req.body.firstName || !req.body.lastName || !req.body.email || !req.body.phoneNumber ) {
+    /*
+    * Validate requested fields
+    * */
+    if (!req.body.firstName || !req.body.lastName || !req.body.email || !req.body.phoneNumber) {
         res.status(400).send({
-            message: "Content can not be empty!"
+            message: "Fields cannot be blank"
         });
-        return;
     }
 
-    // Create a User
+    /*
+    * Create User Model
+    * */
+
     const user = {
         firstName: req.body.firstName,
         lastName: req.body.lastName,
-        email:req.body.email,
+        email: req.body.email,
         phoneNumber: req.body.phoneNumber,
-
     };
 
-    // Save user in the database
+    /*
+    * Save User to database
+    * */
+
     User.create(user)
-        .then(data => {
+        .then((data) => {
             res.send(data);
         })
         .catch(err => {
             res.status(500).send({
-                message:
-                    err.message || "Some error occurred while creating the Tutorial."
-            });
-        });
-
-
-
+                message: err.message || "Some Error occurred while creating the user",
+            })
+        })
 
 };
 
-//Create and save multiple users
 
-exports.bulkCreate = (req, res)=>{
-    // Save one or more Users in the database(missing validation)
+/*
+* Create Users
+* */
+exports.createBulk = (req, res) => {
 
-    User.bulkCreate(req.body,{validate:true ,fields:['_id','firstName','lastName','email','phoneNumber']})
-       .then((data) => {
-        res.send(data)
-    }).catch((err) => {
-        res.status(500).send({
-            message:
-                err.message || "Some error occurred while creating the User."
-        })
+    /*
+    * Save one or more Users in database
+    * */
+
+    User.createBulk(req.body, {
+        validate: true,
+        fields: [
+            '_id',
+            'firstName',
+            'lastName',
+            'email',
+            'phoneNumber'
+        ],
     })
-};
-
-
-// Retrieve all Users from the database.
-exports.findAll = (req, res) => {
-    const firstName = req.query.firstName;
-    var condition = firstName ? {firstName: {[Op.iLike]: `%${firstName}%`}} : null;
-
-    User.findAll({where: condition})
         .then(data => {
-            res.send(data);
+            res.send(data)
         })
         .catch(err => {
             res.status(500).send({
-                message:
-                    err.message || "Some error occurred while retrieving users."
+                message: err.message || "Some error Occurred while creating the User."
+            })
+        });
+};
+
+/*
+* Update User
+* */
+exports.update = (req, res) => {
+    const id = req.body.id
+
+    /*
+    * Update User in Database
+    * */
+    User.update(req.body, {
+        where: {_id: id},
+    })
+        .then(data => {
+            if (data === 1) {
+                res.send({
+                    message: 'User was updated successfully'
+                });
+            } else {
+                res.send({
+                    message: "Cannot update user"
+                })
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: err.message || "Some error Occurred while updating the User with id=" + id,
+            })
+        })
+
+
+};
+
+/*
+* Delete User
+* */
+exports.delete = (req, res) => {
+    const id = req.params.id;
+
+    /*
+    * Delete User from Database
+    * */
+    User.destroy({
+        where: {_id: id}
+    })
+        .then(data => {
+
+            if (data === 1) {
+                res.send({
+                    message: "User was deleted successfully!",
+
+                });
+            } else {
+                res.send({
+                    message: `Cannot delete User with id=${id}. Maybe User was not found!`
+                });
+            }
+        })
+        .catch(err => {
+            res.status(500).send({
+                message: err.message || "Could not delete User with id=" + id
             });
         });
 };
 
-// Find a single User with an id
-exports.findOne = (req, res) => {
+/*
+* Delete all Users
+* */
+exports.deleteAll = (req, res) => {
+
+    /*
+    * Delete all Users from Database
+    * */
+    User.destroy({
+        where: {},
+        truncate: false
+    })
+        .then(data => {
+            res.send({message: `${data} Users were deleted successfully!`});
+        })
+        .catch(err => {
+            res.status(500).send({
+                message:
+                    err.message || "Some error occurred while removing all users."
+            });
+        });
+};
+
+/*
+* Find User by ID
+* */
+exports.findById = (req, res) => {
     const id = req.params.id;
 
 
+    /*
+    * Find User by ID from database
+    * */
     User.findByPk(id)
         .then(data => {
             res.send(data);
@@ -89,72 +191,28 @@ exports.findOne = (req, res) => {
         });
 };
 
-// Update a User by the id in the request
-exports.update = (req, res) => {
-    const id = req.params.id;
+/*
+* Find all Users by name
+* */
+exports.findByName = (req, res) => {
+    const firstName = req.query.firstName;
 
-    User.update(req.body, {
-        where: {_id: id}
-    })
-        .then(num => {
-            if (num == 1) {
-                res.send({
-                    message: "User was updated successfully."
-                });
-            } else {
-                res.send({
-                    message: `Cannot update User with id=${id}. Maybe User was not found or req.body is empty!`
-                });
-            }
-        })
-        .catch(err => {
-            res.status(500).send({
-                message: "Error updating User with id=" + id
-            });
-        });
-};
+    /*
+    * Query Condition
+    * */
+    let condition = firstName ? {firstName: {[Op.iLike]: `%${firstName}%`}} : null;
 
-// Delete a User with the specified id in the request
-exports.delete = (req, res) => {
-    const id = req.params.id;
-
-    User.destroy({
-        where: {_id: id}
-    })
-        .then(num => {
-
-            if (num == 1) {
-                res.send({
-                    message: "User was deleted successfully!" ,
-
-                });
-            } else {
-                res.send({
-                    message: `Cannot delete User with id=${id}. Maybe User was not found!`
-                });
-            }
-        })
-        .catch(err => {
-            res.status(500).send({
-                message: "Could not delete User with id=" + id
-            });
-        });
-};
-
-// Delete all Users from the database.
-exports.deleteAll = (req, res) => {
-    User.destroy({
-        where: {},
-        truncate: false
-    })
-        .then(nums => {
-            res.send({message: `${nums} Users were deleted successfully!`});
+    /*
+    * Find all Users by name from database
+    * */
+    User.findAll({where: condition})
+        .then(data => {
+            res.send(data);
         })
         .catch(err => {
             res.status(500).send({
                 message:
-                    err.message || "Some error occurred while removing all users."
+                    err.message || "Some error occurred while retrieving users."
             });
         });
 };
-

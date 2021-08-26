@@ -1,34 +1,49 @@
-module.exports = app => {
+module.exports = (app) => {
+    /*
+    * Require User controller
+    * */
+    const users = require('../controllers/user.contoller');
 
     /*
-    * Creating ORM routes and relation ships
+    * Require express Router
     * */
+    let router = require('express').Router();
 
-    const users = require("../controllers/user.contoller.js");
+    /*
+    * Create a new User
+    * */
+    router.post('/', users.create);
 
-    var router = require("express").Router();
+    /*
+    * Create Bulk Users
+    * */
+    router.post('/json', users.createBulk);
 
-    // Create a new User
-    router.post("/", users.create);
+    /*
+    * Update User
+    * */
+    router.put('/:id', users.update);
 
-    // Create a new Users
-    router.post("/json", users.bulkCreate);
+    /*
+    * Delete User
+    * */
+    router.delete('/:id', users.delete);
 
-    // Retrieve all Users
-    router.get("/", users.findAll);
+    /*
+    * Delete All Users
+    * */
+    router.delete('/', users.deleteAll);
 
-    // Retrieve a single User with id
-    router.get("/:id", users.findOne);
+    /*
+    * Find all Users by name
+    * */
+    router.get('/', users.findByName);
 
-
-    // Update a Users with id
-    router.put("/:id", users.update);
-
-    // Delete a User with id
-    router.delete("/:id", users.delete);
-
-    // Delete all Users
-    router.delete("/", users.deleteAll);
+    /*
+    * Find one user by id
+    * */
+    router.get('/:id', users.findById);
 
     app.use("/api/users", router);
+
 };

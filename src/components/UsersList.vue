@@ -98,6 +98,7 @@ export default class UsersList extends Vue {
     this.retrieveUsers();
     this.currentUser = {} as User;
     this.currentIndex = -1;
+
   }
 
   setActiveUser(user: User, index: number) {
@@ -129,6 +130,7 @@ export default class UsersList extends Vue {
 
   mounted() {
     this.retrieveUsers();
+    console.log({} as User)
   }
 }
 </script>

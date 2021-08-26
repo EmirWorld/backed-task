@@ -1,37 +1,60 @@
+/*
+* Import Express
+* */
+const express = require('express');
 
-const express = require("express");
-const bodyParser = require("body-parser");
+/*
+* Import Body-parser
+* */
+const bodyParser = require('body-parser');
+
+/*
+* Import CORS
+* */
 const cors = require("cors");
-const app = express();
 
-var corsOptions = {
-    origin: "http://localhost:8080"
+/*
+* Setting cors options
+* */
+const corsOptions = {
+    origin: 'http://localhost:8080'
 };
 
+/*
+* Init express app
+* */
+const app = express();
+
+/*
+* CORS and Body-parser Middleware
+* */
 app.use(cors(corsOptions));
-
-// parse requests of content-type - application/json
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
-// parse requests of content-type - application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: true }));
+/*
+* Sync database
+* */
+const db = require("./app/models")
+db.newSequelize.sync();
 
-const db = require("./app/models");
-db.sequelize.sync();
-// // drop the table if it already exists
-// db.sequelize.sync({ force: true }).then(() => {
-//   console.log("Drop and re-sync db.");
-// });
-
-// simple route
-app.get("/", (req, res) => {
-    res.json({ message: "Welcome" });
+/*
+* Simple Route
+* */
+app.get('/', (req, res) => {
+    res.json({message: 'Welcome'})
 });
 
-require("./app/routes/user.routes")(app);
+/*
+* User API Routes
+* */
+require('./app/routes/user.routes.js')(app);
 
-// set port, listen for requests
+/*
+* Set port for requests
+* */
 const PORT = process.env.PORT || 8081;
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}.`);
+app.listen(PORT, (req, res) => {
+    console.log('Server is running on port ' + PORT)
 });
+

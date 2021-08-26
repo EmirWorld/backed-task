@@ -1,8 +1,9 @@
-module.exports = (sequelize, Sequelize) => {
+module.exports = (newSequelize, Sequelize) => {
     /*
-    * Here we define our USER model and required fields
+    * Define our USER Model and required fields
     * */
-    const User = sequelize.define("user", {
+
+    const User = newSequelize.define('user', {
         _id: {
             type: Sequelize.STRING,
             defaultValue: Sequelize.UUIDV4,
