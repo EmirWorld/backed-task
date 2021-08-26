@@ -87,7 +87,7 @@ exports.createBulk = (req, res) => {
 * Update User
 * */
 exports.update = (req, res) => {
-    const id = req.body.id
+    const id = req.params.id
 
     /*
     * Update User in Database
