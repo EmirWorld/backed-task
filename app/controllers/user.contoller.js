@@ -77,6 +77,7 @@ exports.findAll = (req, res) => {
 exports.findOne = (req, res) => {
     const id = req.params.id;
 
+
     User.findByPk(id)
         .then(data => {
             res.send(data);
@@ -121,9 +122,11 @@ exports.delete = (req, res) => {
         where: {_id: id}
     })
         .then(num => {
+
             if (num == 1) {
                 res.send({
-                    message: "User was deleted successfully!"
+                    message: "User was deleted successfully!" ,
+
                 });
             } else {
                 res.send({

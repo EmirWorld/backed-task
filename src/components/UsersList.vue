@@ -100,8 +100,8 @@ export default class UsersList extends Vue {
     this.currentIndex = -1;
   }
 
-  setActiveUser(tutorial: User, index: number) {
-    this.currentUser = tutorial;
+  setActiveUser(user: User, index: number) {
+    this.currentUser = user;
     this.currentIndex = index;
   }
 
